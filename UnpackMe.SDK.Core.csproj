@@ -2,7 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+	<RunrimeIdentifiers>win10-x64;osx.10.11-x64;ubuntu.16.10-x64</RunrimeIdentifiers>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />

@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using UnpackMe.SDK.Core.Exceptions;
 using UnpackMe.SDK.Core.Models;
+using UnpackMe.SDK.Core.Extensions;
+using System.Threading.Tasks;
 
 namespace UnpackMe.SDK.Core.Request
 {
@@ -62,6 +64,21 @@ namespace UnpackMe.SDK.Core.Request
             var jsonResult = data.Content.ReadAsStringAsync().Result;
             GuardAgainstInvalidStatus(data.StatusCode, jsonResult);
             return jsonResult;
+        }
+
+        public void GetIntoFile(string path, string filename)
+        {
+            GetIntoFileAsync(path, filename).Wait();
+        }
+
+        public Task GetIntoFileAsync(string path, string filename)
+        {
+            var data = _client.GetAsync(String.Format("{0}{1}", _serviceUrl, path)).Result;
+            if (data.StatusCode != HttpStatusCode.OK)
+            {
+                GuardAgainstInvalidStatus(data.StatusCode, data.Content.ReadAsStringAsync().Result);
+            }
+            return data.Content.ReadAsFileAsync(filename);
         }
 
         public void SetToken(string token)

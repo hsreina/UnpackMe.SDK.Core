@@ -58,11 +58,7 @@ namespace UnpackMe.SDK.Core
 
         public void SaveTaskFileFileTo(string taskId, string filename)
         {
-            var data = _requesthandler.Get(String.Format("/task/{0}/download", taskId));
-            using (StreamWriter outputFile = File.CreateText(filename))
-            {
-                outputFile.Write(data);
-            }
+            _requesthandler.GetIntoFile(String.Format("/task/{0}/download", taskId), filename);
         }
 
         public void Dispose()
