@@ -9,6 +9,7 @@ using UnpackMe.SDK.Core.Exceptions;
 using UnpackMe.SDK.Core.Models;
 using UnpackMe.SDK.Core.Extensions;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace UnpackMe.SDK.Core.Request
 {
@@ -18,10 +19,18 @@ namespace UnpackMe.SDK.Core.Request
 
         private string _serviceUrl;
 
-        public RequestHandler(string serviceUrl)
+        public RequestHandler(string serviceUrl, string basicLogin = null, string basicPassword = null)
         {
             _client = new HttpClient();
             _serviceUrl = serviceUrl;
+
+            if (String.IsNullOrEmpty(basicLogin) || String.IsNullOrEmpty(basicPassword))
+            {
+                return;
+            }
+
+            var byteArray = Encoding.ASCII.GetBytes(String.Format("{0}:{1}", basicLogin, basicPassword));
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
         }
 
         public T Post<T>(string path, KeyValuePair<string, string>[] parameters = null)

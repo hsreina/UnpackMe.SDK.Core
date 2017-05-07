@@ -11,9 +11,9 @@ namespace UnpackMe.SDK.Core
     {
         private RequestHandler _requesthandler;
 
-        public UnpackMeClient(string serviceUrl)
+        public UnpackMeClient(string serviceUrl, string basicLogin = null, string basicPassword = null)
         {
-            _requesthandler = new RequestHandler(serviceUrl);
+            _requesthandler = new RequestHandler(serviceUrl, basicLogin, basicPassword);
         }
 
         public void Authenticate(string login, string password)
