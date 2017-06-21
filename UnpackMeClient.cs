@@ -56,7 +56,7 @@ namespace UnpackMe.SDK.Core
             return _requesthandler.Get<TaskModel>(String.Format("/task/{0}", taskid));
         }
 
-        public void SaveTaskFileFileTo(string taskId, string filename)
+        public void SaveTaskFileTo(string taskId, string filename)
         {
             _requesthandler.GetIntoFile(String.Format("/task/{0}/download", taskId), filename);
         }
